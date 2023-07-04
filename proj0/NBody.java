@@ -1,5 +1,5 @@
 public class NBody{
-	public static String background = "images/starfield.jpg";
+	private final static String background = "images/starfield.jpg";
 	
 	public static void main(String[] args) {
         double T = Double.parseDouble(args[0]);
