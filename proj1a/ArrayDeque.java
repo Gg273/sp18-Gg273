@@ -5,9 +5,9 @@ public class ArrayDeque<T> {
     private int nextFirst;
     private int nextLast;
 
-    private final static int INITCAPACITY = 8;
-    private final static double MINFACTOR = 0.25;
-    private final static int RFACTOR = 2;
+    private static final int INITCAPACITY = 8;
+    private static final double MINFACTOR = 0.25;
+    private static final int RFACTOR = 2;
 
     public ArrayDeque() {
         items = (T[]) new Object[INITCAPACITY];

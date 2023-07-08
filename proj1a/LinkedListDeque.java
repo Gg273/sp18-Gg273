@@ -44,17 +44,18 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
-//    public LinkedListDeque(T item) {
-//        sentinel = new DequeNode();
-//        sentinel.next = sentinel;
-//        sentinel.prev = sentinel;
-//        DequeNode temp = new DequeNode(item);
-//        temp.next = sentinel.next;
-//        temp.prev = sentinel;
-//        temp.next.prev = temp;
-//        sentinel.next = temp;
-//        size = 1;
-//    }
+    /* don't needed
+    public LinkedListDeque(T item) {
+        sentinel = new DequeNode();
+        sentinel.next = sentinel;
+        sentinel.prev = sentinel;
+        DequeNode temp = new DequeNode(item);
+        temp.next = sentinel.next;
+        temp.prev = sentinel;
+        temp.next.prev = temp;
+        sentinel.next = temp;
+        size = 1;
+    }*/
 
     /**
      * add item to the front of the deque.
