@@ -77,7 +77,7 @@ public class LinkedListDeque<Luffy> {
     public void printDeque() {
         DequeNode node = sentinel.next;
         while (node != sentinel) {
-            System.out.print(node.item + " ");
+            System.out.print(node.item + new String(" "));
             node = node.next;
         }
     }
