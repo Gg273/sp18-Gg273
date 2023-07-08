@@ -5,9 +5,9 @@ public class ArrayDeque<T> {
     private int nextFirst;
     private int nextLast;
 
-    final private static int INITCAPACITY = 8;
-    final private static double MINFACTOR = 0.25;
-    final private static int RFACTOR = 2;
+    private final static int INITCAPACITY = 8;
+    private final static double MINFACTOR = 0.25;
+    private final static int RFACTOR = 2;
 
     public ArrayDeque() {
         items = (T[]) new Object[INITCAPACITY];
@@ -20,7 +20,6 @@ public class ArrayDeque<T> {
      * resize the capacity of the deque.
      * */
     private void resize(int newCapacity) {
-        //TODO: need to redesign the method.
         int currentFirstIndex = getIndex(nextFirst + 1);
         int currentLastIndex = getIndex(nextLast - 1);
         if (newCapacity < items.length && currentFirstIndex < currentLastIndex) {
@@ -89,7 +88,6 @@ public class ArrayDeque<T> {
      * print all items in the deque
      * */
     public void printDeque() {
-        // TODO: need to redesign the method.
         int currentFirstIndex = getIndex(nextFirst + 1);
         int currentLastIndex = getIndex(nextLast - 1);
 
@@ -142,11 +140,10 @@ public class ArrayDeque<T> {
     }
 
     public T get(int index) {
-        // TODO: need to resign the method.
         if (size < index) {
             return null;
         }
-        int i = getIndex(nextFirst+1);
+        int i = getIndex(nextFirst + 1);
         for (int count = 0; count < index; count++) {
             i = getIndex(i + 1);
         }

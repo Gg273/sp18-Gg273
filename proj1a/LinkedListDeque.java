@@ -152,7 +152,7 @@ public class LinkedListDeque<T> {
         if (index == 0) {
             return node.getItem();
         }
-        return getRecursiveHelper(node.getNext(), index-1);
+        return getRecursiveHelper(node.getNext(), index - 1);
     }
 
 }
