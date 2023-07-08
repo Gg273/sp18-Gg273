@@ -1,4 +1,5 @@
 public class ArrayDeque<T> {
+    // need to change to public when using the ArrayDequeTest
     private T[] items;
     private int size;
     private int nextFirst;
@@ -6,10 +7,11 @@ public class ArrayDeque<T> {
 
     final private static int INITCAPACITY = 8;
     final private static double MINFACTOR = 0.25;
+    final private static int RFACTOR = 2;
 
     public ArrayDeque() {
         items = (T[]) new Object[INITCAPACITY];
-        nextFirst = INITCAPACITY-1;
+        nextFirst = INITCAPACITY - 1;
         nextLast = 0;
         size = 0;
     }
@@ -18,18 +20,28 @@ public class ArrayDeque<T> {
      * resize the capacity of the deque.
      * */
     private void resize(int newCapacity) {
-        //TODO: need to.
-        if (newCapacity < items.length && nextFirst < nextLast) {
+        //TODO: need to redesign the method.
+        int currentFirstIndex = getIndex(nextFirst + 1);
+        int currentLastIndex = getIndex(nextLast - 1);
+        if (newCapacity < items.length && currentFirstIndex < currentLastIndex) {
+            int totalPieceIndex = currentFirstIndex;
+            int totalPieceLenght = currentLastIndex - currentFirstIndex + 1;
+
             T[] temp = (T[]) new Object[newCapacity];
-            System.arraycopy(items, nextFirst+1, temp, 1, nextLast-nextFirst-1);
-            nextLast = nextLast-nextFirst;
-            nextFirst = 0;
+            System.arraycopy(items, totalPieceIndex, temp, 0, totalPieceLenght);
+            nextLast = totalPieceLenght;
+            nextFirst = newCapacity - 1;
             items = temp;
         } else {
+            int firstPieceIndex = currentFirstIndex;
+            int firstPieceLength = items.length - currentFirstIndex;
+            int lastPieceIndex = 0;
+            int lastPieceLength = nextLast;
+
             T[] temp = (T[]) new Object[newCapacity];
-            System.arraycopy(items, 0, temp, 0, nextLast);
-            System.arraycopy(items, nextLast, temp, newCapacity - items.length + getIndex(nextFirst + 1), items.length - getIndex(nextFirst + 1));
-            nextFirst = newCapacity - items.length + getIndex(nextFirst + 1) - 1;
+            System.arraycopy(items, lastPieceIndex, temp, 0, lastPieceLength);
+            System.arraycopy(items, firstPieceIndex, temp, newCapacity - firstPieceLength, firstPieceLength);
+            nextFirst = newCapacity - firstPieceLength - 1;
             items = temp;
         }
     }
@@ -43,7 +55,7 @@ public class ArrayDeque<T> {
      * */
     public void addFirst(T item) {
         if (items.length == size) {
-            resize(items.length * 2);
+            resize(items.length * RFACTOR);
         }
         items[nextFirst] = item;
         nextFirst = getIndex(nextFirst - 1);
@@ -55,7 +67,7 @@ public class ArrayDeque<T> {
      * */
     public void addLast(T item) {
         if (items.length == size) {
-            resize(items.length * 2);
+            resize(items.length * RFACTOR);
         }
         items[nextLast] = item;
         nextLast = getIndex(nextLast + 1);
@@ -77,15 +89,19 @@ public class ArrayDeque<T> {
      * print all items in the deque
      * */
     public void printDeque() {
-        if (size == items.length || nextFirst < nextLast) {
-            for (int i = nextFirst + 1; i < items.length; i++) {
-                System.out.println(items[i] + new String(" "));
-            }
-            for (int i = 0; i < nextLast; i++) {
+        // TODO: need to redesign the method.
+        int currentFirstIndex = getIndex(nextFirst + 1);
+        int currentLastIndex = getIndex(nextLast - 1);
+
+        if (size < items.length && currentFirstIndex < currentLastIndex) {
+            for (int i = currentFirstIndex; i < (currentLastIndex + 1); i++) {
                 System.out.println(items[i] + new String(" "));
             }
         } else {
-            for (int i = nextFirst+1; i < nextLast; i++) {
+            for (int i = currentFirstIndex; i < items.length; i++) {
+                System.out.println(items[i] + new String(" "));
+            }
+            for (int i = 0; i < (currentLastIndex + 1); i++) {
                 System.out.println(items[i] + new String(" "));
             }
         }
@@ -98,7 +114,7 @@ public class ArrayDeque<T> {
 
         double factor = ((double) size) / items.length;
         if (items.length > INITCAPACITY && factor < MINFACTOR) {
-            resize(items.length / 2);
+            resize(items.length / RFACTOR);
         }
 
         nextFirst = getIndex(nextFirst + 1);
@@ -115,7 +131,7 @@ public class ArrayDeque<T> {
 
         double factor = ((double) size) / items.length;
         if (items.length > INITCAPACITY && factor < MINFACTOR) {
-            resize(items.length / 2);
+            resize(items.length / RFACTOR);
         }
 
         nextLast = getIndex(nextLast - 1);
@@ -126,6 +142,7 @@ public class ArrayDeque<T> {
     }
 
     public T get(int index) {
+        // TODO: need to resign the method.
         if (size < index) {
             return null;
         }
