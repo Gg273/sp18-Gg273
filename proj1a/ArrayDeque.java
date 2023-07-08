@@ -1,15 +1,15 @@
-public class ArrayDeque<Luffy> {
-    public Luffy[] items;
+public class ArrayDeque<T> {
+    private T[] items;
     private int size;
     private int nextFirst;
     private int nextLast;
 
-    private final static int initCapacity = 8;
-    private final static double minFactor = 0.25;
+    final private static int INITCAPACITY = 8;
+    final private static double MINFACTOR = 0.25;
 
     public ArrayDeque() {
-        items = (Luffy[]) new Object[initCapacity];
-        nextFirst = initCapacity-1;
+        items = (T[]) new Object[INITCAPACITY];
+        nextFirst = INITCAPACITY-1;
         nextLast = 0;
         size = 0;
     }
@@ -20,13 +20,13 @@ public class ArrayDeque<Luffy> {
     private void resize(int newCapacity) {
         //TODO: need to.
         if (newCapacity < items.length && nextFirst < nextLast) {
-            Luffy[] temp = (Luffy[]) new Object[newCapacity];
+            T[] temp = (T[]) new Object[newCapacity];
             System.arraycopy(items, nextFirst+1, temp, 1, nextLast-nextFirst-1);
             nextLast = nextLast-nextFirst;
             nextFirst = 0;
             items = temp;
         } else {
-            Luffy[] temp = (Luffy[]) new Object[newCapacity];
+            T[] temp = (T[]) new Object[newCapacity];
             System.arraycopy(items, 0, temp, 0, nextLast);
             System.arraycopy(items, nextLast, temp, newCapacity - items.length + getIndex(nextFirst + 1), items.length - getIndex(nextFirst + 1));
             nextFirst = newCapacity - items.length + getIndex(nextFirst + 1) - 1;
@@ -41,7 +41,7 @@ public class ArrayDeque<Luffy> {
     /**
      * add item to the front of the deque.
      * */
-    public void addFirst(Luffy item) {
+    public void addFirst(T item) {
         if (items.length == size) {
             resize(items.length * 2);
         }
@@ -53,7 +53,7 @@ public class ArrayDeque<Luffy> {
     /**
      * add item to the back of the deque.
      * */
-    public void addLast(Luffy item) {
+    public void addLast(T item) {
         if (items.length == size) {
             resize(items.length * 2);
         }
@@ -91,42 +91,48 @@ public class ArrayDeque<Luffy> {
         }
     }
 
-    public Luffy removeFirst() {
+    public T removeFirst() {
         if (size == 0) {
             return null;
         }
 
         double factor = ((double) size) / items.length;
-        if (items.length > initCapacity && factor < minFactor) {
+        if (items.length > INITCAPACITY && factor < MINFACTOR) {
             resize(items.length / 2);
         }
 
         nextFirst = getIndex(nextFirst + 1);
-        Luffy temp = items[nextFirst];
+        T temp = items[nextFirst];
         items[nextLast] = null;
         size -= 1;
         return temp;
     }
 
-    public Luffy removeLast() {
+    public T removeLast() {
         if (size == 0) {
             return null;
         }
 
         double factor = ((double) size) / items.length;
-        if (items.length > initCapacity && factor < minFactor) {
+        if (items.length > INITCAPACITY && factor < MINFACTOR) {
             resize(items.length / 2);
         }
 
         nextLast = getIndex(nextLast - 1);
-        Luffy temp = items[nextLast];
+        T temp = items[nextLast];
         items[nextLast] = null;
         size -= 1;
         return temp;
     }
 
-    public Luffy get(int index) {
-
-        return null;
+    public T get(int index) {
+        if (size < index) {
+            return null;
+        }
+        int i = getIndex(nextFirst+1);
+        for (int count = 0; count < index; count++) {
+            i = getIndex(i + 1);
+        }
+        return items[i];
     }
 }

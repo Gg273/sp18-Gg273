@@ -1,14 +1,14 @@
-public class LinkedListDeque<Luffy> {
-    public class DequeNode {
+public class LinkedListDeque<T> {
+    private class DequeNode {
         public DequeNode prev;
-        public Luffy item;
+        public T item;
         public DequeNode next;
 
         public DequeNode() {
             prev = null;
             next = null;
         }
-        public DequeNode(Luffy i) {
+        public DequeNode(T i) {
             item = i;
             prev = null;
             next = null;
@@ -24,7 +24,7 @@ public class LinkedListDeque<Luffy> {
         size = 0;
     }
 
-//    public LinkedListDeque(Luffy item) {
+//    public LinkedListDeque(T item) {
 //        sentinel = new DequeNode();
 //        sentinel.next = sentinel;
 //        sentinel.prev = sentinel;
@@ -39,7 +39,7 @@ public class LinkedListDeque<Luffy> {
     /**
      * add item to the front of the deque.
      * */
-    public void addFirst(Luffy item) {
+    public void addFirst(T item) {
         DequeNode temp = new DequeNode(item);
         temp.next = sentinel.next;
         temp.prev = sentinel;
@@ -51,7 +51,7 @@ public class LinkedListDeque<Luffy> {
     /**
      * add item to the back of the deque.
      * */
-    public void addLast(Luffy item) {
+    public void addLast(T item) {
         DequeNode temp = new DequeNode(item);
         temp.next = sentinel;
         temp.prev = sentinel.prev;
@@ -82,7 +82,7 @@ public class LinkedListDeque<Luffy> {
         }
     }
 
-    public Luffy removeFirst() {
+    public T removeFirst() {
         if (size() == 0) {
             return null;
         }
@@ -95,7 +95,7 @@ public class LinkedListDeque<Luffy> {
         return first.item;
     }
 
-    public Luffy removeLast() {
+    public T removeLast() {
         if (size() == 0) {
             return null;
         }
@@ -108,7 +108,7 @@ public class LinkedListDeque<Luffy> {
         return last.item;
     }
 
-    public Luffy get(int index) {
+    public T get(int index) {
         if (size() <= index) {
             return null;
         }
@@ -121,18 +121,18 @@ public class LinkedListDeque<Luffy> {
         return node.item;
     }
 
-    public Luffy getRecursive(int index) {
+    public T getRecursive(int index) {
         if (size() <= index) {
             return null;
         }
         return getRecursiveHelper(sentinel.next, index);
     }
 
-    private Luffy getRecursiveHelper(DequeNode node, int index) {
+    private T getRecursiveHelper(DequeNode node, int index) {
         if (index == 0) {
             return node.item;
         }
-        return getRecursiveHelper(node.next, index);
+        return getRecursiveHelper(node.next, index-1);
     }
 
 }
