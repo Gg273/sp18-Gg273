@@ -20,6 +20,7 @@ public class ArrayDeque<T> {
      * resize the capacity of the deque.
      * */
     private void resize(int newCapacity) {
+        /*
         int currentFirstIndex = getIndex(nextFirst + 1);
         int currentLastIndex = getIndex(nextLast - 1);
         if (newCapacity < items.length && currentFirstIndex < currentLastIndex) {
@@ -42,11 +43,39 @@ public class ArrayDeque<T> {
             System.arraycopy(items, firstPieceIndex, temp, newCapacity - firstPieceLength, firstPieceLength);
             nextFirst = newCapacity - firstPieceLength - 1;
             items = temp;
+        }*/
+        resizeHelper(newCapacity);
+    }
+
+    /**
+     * a better way to resize the capacity of the deque.
+     * */
+    private void resizeHelper(int newCapacity) {
+        T[] temp = (T[]) new Object[newCapacity];
+        int firstIndex = getIndex(nextFirst + 1);
+        for (int i = 0; i < size; i++) {
+            temp[i] = items[getIndex(firstIndex + i)];
         }
+        nextLast = size;
+        nextFirst = newCapacity - 1;
+        items = temp;
     }
 
     private int getIndex(int index) {
         return (index + items.length) % items.length;
+    }
+
+    /**
+     * for test method that return a array that from the first to last;
+     * */
+    public T[] getItems() {
+        T[] temp = (T[]) new Object[size];
+        int firstIndex = getIndex(nextFirst + 1);
+        for (int i = 0; i < size; i++) {
+            temp[i] = items[getIndex(firstIndex + i)];
+        }
+
+        return temp;
     }
 
     /**
@@ -85,9 +114,10 @@ public class ArrayDeque<T> {
     }
 
     /**
-     * print all items in the deque
+     * print all items in the deque, a bad idea.
      * */
     public void printDeque() {
+        /*
         int currentFirstIndex = getIndex(nextFirst + 1);
         int currentLastIndex = getIndex(nextLast - 1);
 
@@ -102,6 +132,15 @@ public class ArrayDeque<T> {
             for (int i = 0; i < (currentLastIndex + 1); i++) {
                 System.out.println(items[i] + new String(" "));
             }
+        }
+        */
+        printDequeNicer();
+    }
+
+    private void printDequeNicer() {
+        int first = getIndex(nextFirst + 1);
+        for (int i = 0; i < size; i++) {
+            System.out.print(items[getIndex(first + i)] + new String(""));
         }
     }
 
