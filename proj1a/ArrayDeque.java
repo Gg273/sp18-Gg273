@@ -16,8 +16,23 @@ public class ArrayDeque<T> {
         size = 0;
     }
 
+    public ArrayDeque(ArrayDeque other) {
+        items = (T[]) new Object[INITCAPACITY];
+        nextFirst = INITCAPACITY - 1;
+        nextLast = 0;
+        size = 0;
+
+        for (int i = 0; i < other.size(); i++) {
+            T temp = (T) other.get(i);
+            this.addLast(temp);
+        }
+
+    }
+
     /**
      * resize the capacity of the deque.
+     * maybe use the System.arraycopy method will run faster than copy item by item.
+     * because it copy a piece of memory to the destine a time( guess? i'm not sure about it.).
      * */
     private void resize(int newCapacity) {
         /*
@@ -149,8 +164,8 @@ public class ArrayDeque<T> {
             return null;
         }
 
-        double factor = ((double) size) / items.length;
-        if (items.length > INITCAPACITY && factor < MINFACTOR) {
+        double usageRatio = ((double) size) / items.length;
+        if (items.length > INITCAPACITY && usageRatio < MINFACTOR) {
             resize(items.length / RFACTOR);
         }
 
@@ -166,8 +181,8 @@ public class ArrayDeque<T> {
             return null;
         }
 
-        double factor = ((double) size) / items.length;
-        if (items.length > INITCAPACITY && factor < MINFACTOR) {
+        double usageRatio = ((double) size) / items.length;
+        if (items.length > INITCAPACITY && usageRatio < MINFACTOR) {
             resize(items.length / RFACTOR);
         }
 

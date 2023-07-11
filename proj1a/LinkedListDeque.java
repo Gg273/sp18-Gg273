@@ -56,6 +56,16 @@ public class LinkedListDeque<T> {
         sentinel.next = temp;
         size = 1;
     }*/
+    public LinkedListDeque(LinkedListDeque other) {
+        sentinel = new DequeNode();
+        sentinel.setNext(sentinel);
+        sentinel.setPrev(sentinel);
+        size = 0;
+        for (int i = 0; i < other.size(); i++) {
+            T temp = (T) other.get(i);
+            this.addLast(temp);
+        }
+    }
 
     /**
      * add item to the front of the deque.
