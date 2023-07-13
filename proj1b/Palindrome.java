@@ -9,13 +9,15 @@ public class Palindrome {
 
     // need to use the structure that we created before.
     public boolean isPalindrome(String word) {
-//        int length = word.length();
-//        for (int i = 0; i < length / 2; i++) {
-//            if (word.charAt(i) != word.charAt(length-i-1)) {
-//                return false;
-//            }
-//        }
-//        return true;
+        /*
+        int length = word.length();
+        for (int i = 0; i < length / 2; i++) {
+            if (word.charAt(i) != word.charAt(length-i-1)) {
+                return false;
+            }
+        }
+        return true;
+         */
         Deque<Character> deque = wordToDeque(word);
         while (deque.size() != 1 && deque.size() != 0) {
             Character first = deque.removeFirst();
@@ -27,7 +29,7 @@ public class Palindrome {
         return true;
     }
 
-    public boolean isPalindrome(String word, CharacterComparator cc){
+    public boolean isPalindrome(String word, CharacterComparator cc) {
         Deque<Character> deque = wordToDeque(word);
         while (deque.size() != 1 && deque.size() != 0) {
             Character first = deque.removeFirst();
