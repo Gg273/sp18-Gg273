@@ -32,7 +32,7 @@ public class Palindrome {
         while (deque.size() != 1 && deque.size() != 0) {
             Character first = deque.removeFirst();
             Character last = deque.removeLast();
-            if (cc.equalChars(first, last)) {
+            if (!cc.equalChars(first, last)) {
                 return false;
             }
         }
